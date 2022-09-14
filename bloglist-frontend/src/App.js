@@ -12,8 +12,6 @@ import React from 'react'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState(null)
-  const [isError, setIsError] = useState(false)
 
   const blogFormRef = useRef()
 
@@ -38,27 +36,21 @@ const App = () => {
       {user === null && (
         <>
           <Title name="log in to application" />
-          <Notification msg={message} error={isError} />
-          <Login
-            setUser={setUser}
-            setMessage={setMessage}
-            setIsError={setIsError}
-          />
+          <Notification />
+          <Login setUser={setUser} />
         </>
       )}
 
       {user !== null && (
         <>
           <Title name="blogs" />
-          <Notification msg={message} error={isError} />
+          <Notification />
           <UserInfo setUser={setUser} user={user} />
           <Title name="create new" />
           <Togglable buttonText="new note" ref={blogFormRef}>
             <BlogForm
               blogs={blogs}
               setBlogs={setBlogs}
-              setMessage={setMessage}
-              setIsError={setIsError}
               blogFormRef={blogFormRef}
             />
           </Togglable>

@@ -1,11 +1,14 @@
 import blogService from '../services/blogs'
 import { useState } from 'react'
 import React from 'react'
+import { setMessageWithTimeout } from '../reducers/NotificationReducer'
+import { useDispatch } from 'react-redux'
 
 const BlogForm = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const dispatch = useDispatch()
 
   const handleNewBlogSubmit = async (event) => {
     event.preventDefault()
@@ -18,17 +21,22 @@ const BlogForm = (props) => {
       setAuthor('')
       setUrl('')
       props.setBlogs(props.blogs.concat(newBlog))
-      props.setMessage('Blog created successfully')
-      props.setIsError(false)
-      setTimeout(() => {
-        props.setMessage(null)
-      }, 3000)
+
+      //Set success timeout msg
+      // props.setMessage('Blog created successfully')
+      // props.setIsError(false)
+      // setTimeout(() => {
+      //   props.setMessage(null)
+      // }, 3000)
+      dispatch(setMessageWithTimeout('Blog created successfully', 'success', 3))
     } catch (err) {
-      props.setMessage(err.message)
-      props.setIsError(true)
-      setTimeout(() => {
-        props.setMessage(null)
-      }, 3000)
+      //Set error timeout msg
+      // props.setMessage(err.message)
+      // props.setIsError(true)
+      // setTimeout(() => {
+      //   props.setMessage(null)
+      // }, 3000)
+      dispatch(setMessageWithTimeout(err.message, 'error', 3))
     }
   }
   return (

@@ -2,10 +2,13 @@ import axios from 'axios'
 import blogService from '../services/blogs'
 import { useState } from 'react'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { setMessageWithTimeout } from '../reducers/NotificationReducer'
 
 const Login = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -16,17 +19,9 @@ const Login = (props) => {
       blogService.setToken(response.data.token)
       setUsername('')
       setPassword('')
-      props.setMessage('Login successful')
-      props.setIsError(false)
-      setTimeout(() => {
-        props.setMessage(null)
-      }, 3000)
+      dispatch(setMessageWithTimeout('Login successful', 'success', 3))
     } catch (err) {
-      props.setMessage(err.message)
-      props.setIsError(true)
-      setTimeout(() => {
-        props.setMessage(null)
-      }, 3000)
+      dispatch(setMessageWithTimeout(err.message, 'error', 3))
     }
   }
 
