@@ -26,12 +26,13 @@
 import '@testing-library/cypress/add-commands'
 
 Cypress.Commands.add('login', ({ username, password }) => {
-  cy.request('POST', 'http://localhost:3003/api/login', { username, password }).then(
-    (res) => {
-      localStorage.setItem('loggedInUser', JSON.stringify(res.body))
-      cy.visit('http://localhost:3000')
-    }
-  )
+  cy.request('POST', 'http://localhost:3003/api/login', {
+    username,
+    password,
+  }).then((res) => {
+    localStorage.setItem('loggedInUser', JSON.stringify(res.body))
+    cy.visit('http://localhost:3000')
+  })
 })
 
 Cypress.Commands.add('addNewBlog', ({ title, author, url, likes }) => {
@@ -39,7 +40,11 @@ Cypress.Commands.add('addNewBlog', ({ title, author, url, likes }) => {
     method: 'POST',
     url: 'http://localhost:3003/api/blogs',
     body: { title, author, url, likes },
-    headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('loggedInUser')).token}` }
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem('loggedInUser')).token
+      }`,
+    },
   })
   cy.visit('http://localhost:3000')
 })
@@ -50,5 +55,9 @@ Cypress.Commands.add('logout', () => {
 })
 
 Cypress.Commands.add('addNewUser', ({ username, password, name }) => {
-  cy.request('POST', 'http://localhost:3003/api/users', { username, password, name })
+  cy.request('POST', 'http://localhost:3003/api/users', {
+    username,
+    password,
+    name,
+  })
 })

@@ -14,11 +14,19 @@ test('SetBlogs prop receives correct data when new blog is created', async () =>
   const eventsUser = userEvent.setup()
   const blogFormRef = { current: { toggleVisibility: fillerFunction } }
 
-  const spy = jest.spyOn(blogService, 'createNew').mockImplementation(() => Promise.resolve(
-    { title, author, url }
-  ))
+  const spy = jest
+    .spyOn(blogService, 'createNew')
+    .mockImplementation(() => Promise.resolve({ title, author, url }))
 
-  render(<BlogForm blogs={[]} setBlogs={mockFunction} setMessage={fillerFunction} setIsError={(fillerFunction)} blogFormRef={blogFormRef}/>)
+  render(
+    <BlogForm
+      blogs={[]}
+      setBlogs={mockFunction}
+      setMessage={fillerFunction}
+      setIsError={fillerFunction}
+      blogFormRef={blogFormRef}
+    />
+  )
   const titleInput = await screen.findByTestId('title_input')
   const authorInput = await screen.findByTestId('author_input')
   const urlInput = await screen.findByTestId('url_input')

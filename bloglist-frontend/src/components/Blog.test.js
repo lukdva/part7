@@ -7,23 +7,30 @@ import blogService from '../services/blogs'
 
 test('Rendering Blog component', async () => {
   const blog = {
-    'author': 'John Snow',
-    'likes': 5,
-    'title': 'How to?',
-    'url':'www.howto.com',
-    'id': '62eab5105e41b5c0fdfa9acf',
-    'user': {
-      'id':'62e9235e5e41b5c0fdfa9a41',
-      'name':'John',
-      'username':'johny'
-    }
+    author: 'John Snow',
+    likes: 5,
+    title: 'How to?',
+    url: 'www.howto.com',
+    id: '62eab5105e41b5c0fdfa9acf',
+    user: {
+      id: '62e9235e5e41b5c0fdfa9a41',
+      name: 'John',
+      username: 'johny',
+    },
   }
   const user = {
-    'name':'John',
-    'username':'johny'
+    name: 'John',
+    username: 'johny',
   }
   const mockFunction = jest.fn()
-  render(<Blog blog={blog} user={user} updateBlogList={mockFunction} removeBlogFromList={mockFunction}/>)
+  render(
+    <Blog
+      blog={blog}
+      user={user}
+      updateBlogList={mockFunction}
+      removeBlogFromList={mockFunction}
+    />
+  )
 
   const blogInfoElement = await screen.findByTestId('blog_info')
   const blogUrlElement = await screen.findByTestId('blog_url')
@@ -34,28 +41,34 @@ test('Rendering Blog component', async () => {
   expect(blogInfoElement).toHaveTextContent(blog.author)
   expect(blogUrlElement).not.toBeVisible()
   expect(blogLikesElement).not.toBeVisible()
-
 })
 
 test('Blog details become visible when View button is clicked', async () => {
   const blog = {
-    'author': 'John Snow',
-    'likes': 5,
-    'title': 'How to?',
-    'url':'www.howto.com',
-    'id': '62eab5105e41b5c0fdfa9acf',
-    'user': {
-      'id':'62e9235e5e41b5c0fdfa9a41',
-      'name':'John',
-      'username':'johny'
-    }
+    author: 'John Snow',
+    likes: 5,
+    title: 'How to?',
+    url: 'www.howto.com',
+    id: '62eab5105e41b5c0fdfa9acf',
+    user: {
+      id: '62e9235e5e41b5c0fdfa9a41',
+      name: 'John',
+      username: 'johny',
+    },
   }
   const user = {
-    'name':'John',
-    'username':'johny'
+    name: 'John',
+    username: 'johny',
   }
   const mockFunction = jest.fn()
-  render(<Blog blog={blog} user={user} updateBlogList={mockFunction} removeBlogFromList={mockFunction}/>)
+  render(
+    <Blog
+      blog={blog}
+      user={user}
+      updateBlogList={mockFunction}
+      removeBlogFromList={mockFunction}
+    />
+  )
   const eventsUser = userEvent.setup()
 
   const viewButton = await screen.findByTestId('blog_details_view_button')
@@ -69,30 +82,39 @@ test('Blog details become visible when View button is clicked', async () => {
 
 test('Like button is clicked twice', async () => {
   const blog = {
-    'author': 'John Snow',
-    'likes': 5,
-    'title': 'How to?',
-    'url':'www.howto.com',
-    'id': '62eab5105e41b5c0fdfa9acf',
-    'user': {
-      'id':'62e9235e5e41b5c0fdfa9a41',
-      'name':'John',
-      'username':'johny'
-    }
+    author: 'John Snow',
+    likes: 5,
+    title: 'How to?',
+    url: 'www.howto.com',
+    id: '62eab5105e41b5c0fdfa9acf',
+    user: {
+      id: '62e9235e5e41b5c0fdfa9a41',
+      name: 'John',
+      username: 'johny',
+    },
   }
   const user = {
-    'name':'John',
-    'username':'johny'
+    name: 'John',
+    username: 'johny',
   }
 
   const eventsUser = userEvent.setup()
   const mockFunction = jest.fn()
   const mockUpdateFunction = jest.fn()
 
-  jest.spyOn(blogService, 'increaseLikes').mockImplementation(() => Promise.resolve({
-    json: () => Promise.resolve(blog)
-  }))
-  render(<Blog blog={blog} user={user} updateBlogList={mockUpdateFunction} removeBlogFromList={mockFunction}/>)
+  jest.spyOn(blogService, 'increaseLikes').mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(blog),
+    })
+  )
+  render(
+    <Blog
+      blog={blog}
+      user={user}
+      updateBlogList={mockUpdateFunction}
+      removeBlogFromList={mockFunction}
+    />
+  )
   const viewButton = await screen.findByTestId('blog_details_view_button')
   await eventsUser.click(viewButton)
   const likeButton = await screen.findByTestId('blog_like_button')
@@ -100,5 +122,4 @@ test('Like button is clicked twice', async () => {
   await eventsUser.click(likeButton)
 
   expect(mockUpdateFunction.mock.calls.length).toBe(2)
-
 })

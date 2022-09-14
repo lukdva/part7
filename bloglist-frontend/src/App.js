@@ -18,16 +18,15 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       const blogs = await blogService.getAll()
-      setBlogs( blogs )
+      setBlogs(blogs)
     })()
   }, [])
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedInUser')
-    if (loggedInUser)
-    {
+    if (loggedInUser) {
       const userObj = JSON.parse(loggedInUser)
       setUser(userObj)
       blogService.setToken(userObj.token)
@@ -36,26 +35,36 @@ const App = () => {
 
   return (
     <>
-      {user === null &&
-      <>
-        <Title name = 'log in to application'/>
-        <Notification msg={message} error={isError}/>
-        <Login setUser={setUser} setMessage={setMessage} setIsError={setIsError}/>
-      </>
-      }
-
-      { user !== null &&
+      {user === null && (
         <>
-          <Title name='blogs'/>
-          <Notification msg={message} error={isError}/>
+          <Title name="log in to application" />
+          <Notification msg={message} error={isError} />
+          <Login
+            setUser={setUser}
+            setMessage={setMessage}
+            setIsError={setIsError}
+          />
+        </>
+      )}
+
+      {user !== null && (
+        <>
+          <Title name="blogs" />
+          <Notification msg={message} error={isError} />
           <UserInfo setUser={setUser} user={user} />
-          <Title name='create new'/>
-          <Togglable buttonText='new note' ref={blogFormRef}>
-            <BlogForm blogs={blogs} setBlogs={setBlogs} setMessage={setMessage} setIsError={setIsError} blogFormRef={blogFormRef}/>
+          <Title name="create new" />
+          <Togglable buttonText="new note" ref={blogFormRef}>
+            <BlogForm
+              blogs={blogs}
+              setBlogs={setBlogs}
+              setMessage={setMessage}
+              setIsError={setIsError}
+              blogFormRef={blogFormRef}
+            />
           </Togglable>
           <BlogList blogs={blogs} user={user} setBlogs={setBlogs} />
         </>
-      }
+      )}
     </>
   )
 }
