@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const NotificationSlice = createSlice({
+const notificationSlice = createSlice({
   name: 'notification',
   initialState: { message: '', visible: false, type: '' },
   reducers: {
@@ -22,6 +22,6 @@ export const setMessageWithTimeout = (message, type, timeinSecs) => {
   }
 }
 
-export const { setMessage, clearMessage } = NotificationSlice.actions
+export const { setMessage, clearMessage } = notificationSlice.actions
 
-export default NotificationSlice.reducer
+export default notificationSlice.reducer

@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
+// import blogService from '../services/blogs'
+import { deleteBlog, increaseLikes } from '../reducers/BlogsReducer'
+import { useDispatch } from 'react-redux'
 
-const Blog = ({ blog, updateBlogList, user, removeBlogFromList }) => {
+const Blog = ({ blog, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -9,18 +11,17 @@ const Blog = ({ blog, updateBlogList, user, removeBlogFromList }) => {
     borderWidth: 1,
     marginBottom: 5,
   }
+  const dispatch = useDispatch()
   const [visibleDetails, setVisibleDetails] = useState(false)
   const toggleVisibility = () => {
     setVisibleDetails(!visibleDetails)
   }
-  const handleLikeClick = async () => {
-    const response = await blogService.increaseLikes(blog)
-    updateBlogList(response)
+  const handleLikeClick = () => {
+    dispatch(increaseLikes(blog))
   }
-  const handleRemoveClick = async () => {
+  const handleRemoveClick = () => {
     if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
-      await blogService.removeBlog(blog)
-      removeBlogFromList(blog)
+      dispatch(deleteBlog(blog))
     }
   }
 
