@@ -3,6 +3,7 @@ import { useState } from 'react'
 import React from 'react'
 import { setMessageWithTimeout } from '../reducers/NotificationReducer'
 import { useDispatch } from 'react-redux'
+import { createBlog } from '../reducers/BlogsReducer'
 
 const BlogForm = (props) => {
   const [title, setTitle] = useState('')
@@ -20,22 +21,9 @@ const BlogForm = (props) => {
       setTitle('')
       setAuthor('')
       setUrl('')
-      props.setBlogs(props.blogs.concat(newBlog))
-
-      //Set success timeout msg
-      // props.setMessage('Blog created successfully')
-      // props.setIsError(false)
-      // setTimeout(() => {
-      //   props.setMessage(null)
-      // }, 3000)
+      dispatch(createBlog(newBlog))
       dispatch(setMessageWithTimeout('Blog created successfully', 'success', 3))
     } catch (err) {
-      //Set error timeout msg
-      // props.setMessage(err.message)
-      // props.setIsError(true)
-      // setTimeout(() => {
-      //   props.setMessage(null)
-      // }, 3000)
       dispatch(setMessageWithTimeout(err.message, 'error', 3))
     }
   }

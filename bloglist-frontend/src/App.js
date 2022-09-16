@@ -10,17 +10,9 @@ import Togglable from './components/Togglable'
 import React from 'react'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
 
   const blogFormRef = useRef()
-
-  useEffect(() => {
-    ;(async () => {
-      const blogs = await blogService.getAll()
-      setBlogs(blogs)
-    })()
-  }, [])
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedInUser')
@@ -48,13 +40,9 @@ const App = () => {
           <UserInfo setUser={setUser} user={user} />
           <Title name="create new" />
           <Togglable buttonText="new note" ref={blogFormRef}>
-            <BlogForm
-              blogs={blogs}
-              setBlogs={setBlogs}
-              blogFormRef={blogFormRef}
-            />
+            <BlogForm blogFormRef={blogFormRef} />
           </Togglable>
-          <BlogList blogs={blogs} user={user} setBlogs={setBlogs} />
+          <BlogList user={user} />
         </>
       )}
     </>
