@@ -1,11 +1,11 @@
 import axios from 'axios'
-import blogService from '../services/blogs'
 import { useState } from 'react'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { setMessageWithTimeout } from '../reducers/NotificationReducer'
+import { setUser } from '../reducers/UserReducer'
 
-const Login = (props) => {
+const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
@@ -15,8 +15,7 @@ const Login = (props) => {
     try {
       const response = await axios.post('/api/login', { username, password })
       window.localStorage.setItem('loggedInUser', JSON.stringify(response.data))
-      props.setUser(response.data)
-      blogService.setToken(response.data.token)
+      dispatch(setUser(response.data))
       setUsername('')
       setPassword('')
       dispatch(setMessageWithTimeout('Login successful', 'success', 3))
