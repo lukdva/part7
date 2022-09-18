@@ -1,13 +1,11 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { clearUser } from '../reducers/UserReducer'
+import { clearUser } from '../reducers/LoggedInUserReducer'
 
 const UserInfo = (props) => {
   const dispatch = useDispatch()
   const handleLogout = () => {
-    // console.log('Logout click')
     dispatch(clearUser())
-    // window.localStorage.removeItem('loggedInUser')
   }
   return (
     <p>

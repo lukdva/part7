@@ -7,11 +7,13 @@ import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import React from 'react'
+import Users from './components/Users'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser } from './reducers/UserReducer'
+import { setUser } from './reducers/LoggedInUserReducer'
+import { Routes, Route } from 'react-router-dom'
 
 const App = () => {
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.loggedInUser)
   const dispatch = useDispatch()
   console.log('user', user)
   const blogFormRef = useRef()
@@ -39,11 +41,21 @@ const App = () => {
           <Title name="blogs" />
           <Notification />
           <UserInfo user={user} />
-          <Title name="create new" />
-          <Togglable buttonText="new note" ref={blogFormRef}>
-            <BlogForm blogFormRef={blogFormRef} />
-          </Togglable>
-          <BlogList user={user} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Title name="create new" />
+                  <Togglable buttonText="new note" ref={blogFormRef}>
+                    <BlogForm blogFormRef={blogFormRef} />
+                  </Togglable>
+                  <BlogList user={user} />
+                </>
+              }
+            />
+            <Route path="/users" element={<Users />} />
+          </Routes>
         </>
       )}
     </>

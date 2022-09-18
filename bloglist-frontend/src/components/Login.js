@@ -3,7 +3,7 @@ import { useState } from 'react'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { setMessageWithTimeout } from '../reducers/NotificationReducer'
-import { setUser } from '../reducers/UserReducer'
+import { setUser } from '../reducers/LoggedInUserReducer'
 
 const Login = () => {
   const [username, setUsername] = useState('')
