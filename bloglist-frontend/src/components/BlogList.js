@@ -1,16 +1,16 @@
-import Blog from './Blog'
+import BlogLine from './BlogLine'
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import { initializeBlogs } from '../reducers/BlogsReducer'
+import { useSelector } from 'react-redux'
+// import { useEffect } from 'react'
+// import { initializeBlogs } from '../reducers/BlogsReducer'
 
-const BlogList = ({ user }) => {
-  const dispatch = useDispatch()
+const BlogList = () => {
+  // const dispatch = useDispatch()
   const blogs = useSelector((state) => state.blogs)
 
-  useEffect(() => {
-    dispatch(initializeBlogs())
-  }, [])
+  // useEffect(() => {
+
+  // }, [])
 
   return (
     <div data-testid="blog_list">
@@ -18,7 +18,7 @@ const BlogList = ({ user }) => {
         .slice()
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
-          <Blog key={blog.id} blog={blog} user={user} />
+          <BlogLine key={blog.id} blog={blog} />
         ))}
     </div>
   )

@@ -9,17 +9,19 @@ import Togglable from './components/Togglable'
 import React from 'react'
 import Users from './components/Users'
 import User from './components/User'
+import Blog from './components/Blog'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from './reducers/LoggedInUserReducer'
 import { Routes, Route, useMatch } from 'react-router-dom'
 import { initializeUsers } from './reducers/UsersReducer'
+import { initializeBlogs } from './reducers/BlogsReducer'
 
 const App = () => {
   const signedUser = useSelector((state) => state.loggedInUser)
   const dispatch = useDispatch()
-  // console.log('user', user)
   const blogFormRef = useRef()
   const users = useSelector((state) => state.users)
+  const blogs = useSelector((state) => state.blogs)
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedInUser')
@@ -27,21 +29,18 @@ const App = () => {
       const userObj = JSON.parse(loggedInUser)
       dispatch(setUser(userObj))
       dispatch(initializeUsers())
+      dispatch(initializeBlogs())
     }
   }, [])
   const userMatch = useMatch('/users/:id')
-  if (userMatch) {
-    console.log('Number(userMatch.params.id)', Number(userMatch.params.id))
-    console.log('match', userMatch)
-  }
   const user = userMatch
-    ? users.find((user) => {
-        // console.log('user.id', user.id)
-        // console.log('Number(userMatch.params.id)', Number(userMatch.params.id))
-        return user.id === userMatch.params.id
-      })
+    ? users.find((user) => user.id === userMatch.params.id)
     : null
-  console.log(user)
+  const blogMatch = useMatch('/blogs/:id')
+  const blog = blogMatch
+    ? blogs.find((blog) => blog.id === blogMatch.params.id)
+    : null
+
   return (
     <>
       {signedUser === null && (
@@ -66,12 +65,16 @@ const App = () => {
                   <Togglable buttonText="new note" ref={blogFormRef}>
                     <BlogForm blogFormRef={blogFormRef} />
                   </Togglable>
-                  <BlogList user={signedUser} />
+                  <BlogList user={signedUser} blogs={blogs} />
                 </>
               }
             />
             <Route path="/users" element={<Users />} />
             <Route path="/users/:id" element={<User user={user} />} />
+            <Route
+              path="/blogs/:id"
+              element={<Blog blog={blog} user={signedUser} />}
+            />
           </Routes>
         </>
       )}
