@@ -1,15 +1,17 @@
 import { deleteBlog, increaseLikes } from '../reducers/BlogsReducer'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const Blog = ({ blog, user }) => {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const handleLikeClick = () => {
     dispatch(increaseLikes(blog))
   }
   const handleRemoveClick = () => {
     if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
       dispatch(deleteBlog(blog))
+      navigate('/')
     }
   }
   if (!blog) {
