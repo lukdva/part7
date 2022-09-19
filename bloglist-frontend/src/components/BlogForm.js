@@ -17,7 +17,6 @@ const BlogForm = (props) => {
       props.blogFormRef.current.toggleVisibility()
       const blog = { title, author, url }
       const newBlog = await blogService.createNew(blog)
-      console.log(newBlog)
       setTitle('')
       setAuthor('')
       setUrl('')
