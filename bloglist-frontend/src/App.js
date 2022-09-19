@@ -2,7 +2,6 @@ import { useRef, useEffect } from 'react'
 import Login from './components/Login'
 import BlogList from './components/BlogList'
 import Title from './components/Title'
-import UserInfo from './components/UserInfo'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
@@ -15,6 +14,7 @@ import { setUser } from './reducers/LoggedInUserReducer'
 import { Routes, Route, useMatch } from 'react-router-dom'
 import { initializeUsers } from './reducers/UsersReducer'
 import { initializeBlogs } from './reducers/BlogsReducer'
+import Navigation from './components/Navigation'
 
 const App = () => {
   const signedUser = useSelector((state) => state.loggedInUser)
@@ -53,9 +53,9 @@ const App = () => {
 
       {signedUser !== null && (
         <>
+          <Navigation />
           <Title name="blogs" />
           <Notification />
-          <UserInfo user={signedUser} />
           <Routes>
             <Route
               path="/"
@@ -69,7 +69,7 @@ const App = () => {
                 </>
               }
             />
-            <Route path="/users" element={<Users />} />
+            <Route path="/users" element={<Users users={users} />} />
             <Route path="/users/:id" element={<User user={user} />} />
             <Route
               path="/blogs/:id"

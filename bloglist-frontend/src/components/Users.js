@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Users = ({ users }) => {
+  if (!users) return null
   return (
     <>
       <h2>Users</h2>

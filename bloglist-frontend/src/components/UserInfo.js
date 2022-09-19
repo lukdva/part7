@@ -1,17 +1,23 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { clearUser } from '../reducers/LoggedInUserReducer'
 
-const UserInfo = (props) => {
+const UserInfo = () => {
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.loggedInUser)
   const handleLogout = () => {
     dispatch(clearUser())
   }
+  const buttonStyle = {
+    marginLeft: 5,
+  }
   return (
-    <p>
-      {props.user.name} logged in
-      <button onClick={handleLogout}>logout</button>
-    </p>
+    <>
+      {user.name} logged in
+      <button onClick={handleLogout} style={buttonStyle}>
+        logout
+      </button>
+    </>
   )
 }
 
