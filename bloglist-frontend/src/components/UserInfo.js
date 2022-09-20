@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearUser } from '../reducers/LoggedInUserReducer'
+import { Button, Box } from '@mui/material'
 
 const UserInfo = () => {
   const dispatch = useDispatch()
@@ -12,12 +13,12 @@ const UserInfo = () => {
     marginLeft: 5,
   }
   return (
-    <>
+    <Box>
       {user.name} logged in
-      <button onClick={handleLogout} style={buttonStyle}>
+      <Button color="inherit" onClick={handleLogout} style={buttonStyle}>
         logout
-      </button>
-    </>
+      </Button>
+    </Box>
   )
 }
 

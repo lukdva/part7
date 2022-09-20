@@ -1,28 +1,23 @@
+import { AppBar, Button, Toolbar, Box } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import UserInfo from './UserInfo'
 
 const Navigation = () => {
-  const style = {
-    paddingTop: 10,
-    paddingLeft: 5,
-    paddingBottom: 5,
-    marginBottom: 5,
-    backgroundColor: 'grey',
-  }
-  const linkStyle = {
-    paddingRight: 5,
-  }
   return (
-    <div style={style}>
-      <Link to="/" style={linkStyle}>
-        blogs
-      </Link>
-      <Link to="/users" style={linkStyle}>
-        users
-      </Link>
-      <UserInfo />
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <Box sx={{ flexGrow: 1 }}>
+          <Button color="inherit" component={Link} to="/">
+            blogs
+          </Button>
+          <Button color="inherit" component={Link} to="/users">
+            users
+          </Button>
+        </Box>
+        <UserInfo color="inherit" />
+      </Toolbar>
+    </AppBar>
   )
 }
 

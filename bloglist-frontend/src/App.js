@@ -15,6 +15,7 @@ import { Routes, Route, useMatch } from 'react-router-dom'
 import { initializeUsers } from './reducers/UsersReducer'
 import { initializeBlogs } from './reducers/BlogsReducer'
 import Navigation from './components/Navigation'
+import { Container } from '@mui/material'
 
 const App = () => {
   const signedUser = useSelector((state) => state.loggedInUser)
@@ -52,7 +53,7 @@ const App = () => {
       )}
 
       {signedUser !== null && (
-        <>
+        <Container>
           <Navigation />
           <Title name="blogs" />
           <Notification />
@@ -76,7 +77,7 @@ const App = () => {
               element={<Blog blog={blog} user={signedUser} />}
             />
           </Routes>
-        </>
+        </Container>
       )}
     </>
   )
