@@ -1,10 +1,12 @@
 import React from 'react'
+import CommentForm from './CommentForm'
 
 const Comments = ({ comments }) => {
   console.log(comments)
   return (
     <div>
       <h3>comments</h3>
+      <CommentForm />
       {comments && comments.length > 0 ? (
         <ul>
           {comments.map((comment) => (

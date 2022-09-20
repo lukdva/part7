@@ -19,6 +19,12 @@ const blogsSlice = createSlice({
         blog.id === action.payload.id ? action.payload : blog
       )
     },
+    addComment(state, action) {
+      console.log('state', state[0].comments)
+      const comment = action.payload
+      const index = state.findIndex((blog) => blog.id === comment.blog)
+      state[index].comments.push({ id: comment.id, content: comment.content })
+    },
   },
 })
 export const initializeBlogs = () => {
@@ -46,6 +52,13 @@ export const increaseLikes = (blog) => {
     dispatch(updateBlogState(result))
   }
 }
-export const { addBlog, setBlogs, removeBlog, updateBlogState } =
+export const createComment = (blogId, comment) => {
+  return async (dispatch) => {
+    const result = await blogService.createComment(blogId, comment)
+    console.log('result', result)
+    dispatch(addComment(result))
+  }
+}
+export const { addBlog, setBlogs, removeBlog, updateBlogState, addComment } =
   blogsSlice.actions
 export default blogsSlice.reducer
