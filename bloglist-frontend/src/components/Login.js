@@ -5,11 +5,13 @@ import { useDispatch } from 'react-redux'
 import { setMessageWithTimeout } from '../reducers/NotificationReducer'
 import { setUser } from '../reducers/LoggedInUserReducer'
 import { Button, TextField } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const styles = {
     marginTop: 8,
   }
@@ -22,6 +24,7 @@ const Login = () => {
       setUsername('')
       setPassword('')
       dispatch(setMessageWithTimeout('Login successful', 'success', 3))
+      navigate('/')
     } catch (err) {
       dispatch(setMessageWithTimeout(err.message, 'error', 3))
     }

@@ -11,29 +11,28 @@ import User from './components/User'
 import Blog from './components/Blog'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser } from './reducers/LoggedInUserReducer'
-import { Routes, Route, useMatch } from 'react-router-dom'
+import { Routes, Route, useMatch, Navigate } from 'react-router-dom'
 import { initializeUsers } from './reducers/UsersReducer'
 import { initializeBlogs } from './reducers/BlogsReducer'
 import Navigation from './components/Navigation'
 import { Container, Typography } from '@mui/material'
-// import '@fontsource/roboto/400.css'
 
 const App = () => {
-  const signedUser = useSelector((state) => state.loggedInUser)
   const dispatch = useDispatch()
   const blogFormRef = useRef()
   const users = useSelector((state) => state.users)
   const blogs = useSelector((state) => state.blogs)
+  const loggedInUser = window.localStorage.getItem('loggedInUser')
 
   useEffect(() => {
-    const loggedInUser = window.localStorage.getItem('loggedInUser')
     if (loggedInUser) {
       const userObj = JSON.parse(loggedInUser)
       dispatch(setUser(userObj))
       dispatch(initializeUsers())
       dispatch(initializeBlogs())
     }
-  }, [])
+  }, [loggedInUser])
+  const signedUser = useSelector((state) => state.loggedInUser)
   const userMatch = useMatch('/users/:id')
   const user = userMatch
     ? users.find((user) => user.id === userMatch.params.id)
@@ -45,42 +44,61 @@ const App = () => {
 
   return (
     <>
-      {signedUser === null && (
-        <>
-          <Title name="log in to application" />
-          <Notification />
-          <Login />
-        </>
-      )}
-
-      {signedUser !== null && (
-        <Container>
-          <Navigation />
-
-          <Notification />
-          <Routes>
-            <Route
-              path="/"
-              element={
+      <Container>
+        {signedUser && <Navigation />}
+        <Notification />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              signedUser || loggedInUser ? (
                 <>
-                  <Title name="blogs" />
+                  <Title name="Blogs" />
                   <Typography variant={'h4'}> Create new note</Typography>
                   <Togglable buttonText="new blog" ref={blogFormRef}>
                     <BlogForm blogFormRef={blogFormRef} />
                   </Togglable>
                   <BlogList user={signedUser} blogs={blogs} />
                 </>
-              }
-            />
-            <Route path="/users" element={<Users users={users} />} />
-            <Route path="/users/:id" element={<User user={user} />} />
-            <Route
-              path="/blogs/:id"
-              element={<Blog blog={blog} user={signedUser} />}
-            />
-          </Routes>
-        </Container>
-      )}
+              ) : (
+                <Navigate replace to="/login" />
+              )
+            }
+          />
+
+          <Route
+            path="/users"
+            element={
+              signedUser || loggedInUser ? (
+                <Users users={users} />
+              ) : (
+                <Navigate replace to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/users/:id"
+            element={
+              signedUser || loggedInUser ? (
+                <User user={user} />
+              ) : (
+                <Navigate replace to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/blogs/:id"
+            element={
+              signedUser || loggedInUser ? (
+                <Blog blog={blog} user={signedUser} />
+              ) : (
+                <Navigate replace to="/login" />
+              )
+            }
+          />
+        </Routes>
+      </Container>
     </>
   )
 }

@@ -12,6 +12,9 @@ const UserInfo = () => {
   const buttonStyle = {
     marginLeft: 5,
   }
+  if (!user) {
+    return null
+  }
   return (
     <Typography variant={'body2'}>
       {user.name} logged in
