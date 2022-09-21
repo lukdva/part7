@@ -2,7 +2,7 @@ import { deleteBlog, increaseLikes } from '../reducers/BlogsReducer'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Comments from './Comments'
-import { Button, Typography } from '@mui/material'
+import { Button, Typography, Box } from '@mui/material'
 // import '@fontsource/roboto/700.css'
 
 const Blog = ({ blog, user }) => {
@@ -17,6 +17,9 @@ const Blog = ({ blog, user }) => {
       navigate('/')
     }
   }
+  const margins = {
+    marginLeft: 8,
+  }
   if (!blog) {
     return null
   }
@@ -28,8 +31,25 @@ const Blog = ({ blog, user }) => {
         {blog.url}
       </Typography>
       <Typography variant={'body1'} data-testid="blog_likes">
-        likes {blog.likes}{' '}
+        likes {blog.likes}
+      </Typography>
+      <Typography variant={'body1'}>
+        {blog.user ? `added by ${blog.user.name}` : ''}
+      </Typography>
+      <Box>
+        {blog.user.username === user.username && (
+          <Button
+            variant="contained"
+            size="small"
+            fontSize="small"
+            onClick={handleRemoveClick}
+            data-testid="remove_button"
+          >
+            remove
+          </Button>
+        )}
         <Button
+          style={margins}
           variant="contained"
           size="small"
           fontSize="small"
@@ -38,21 +58,7 @@ const Blog = ({ blog, user }) => {
         >
           like
         </Button>
-      </Typography>
-      <Typography variant={'body1'}>
-        {blog.user ? `added by ${blog.user.name}` : ''}
-      </Typography>
-      {blog.user.username === user.username && (
-        <Button
-          variant="contained"
-          size="small"
-          fontSize="small"
-          onClick={handleRemoveClick}
-          data-testid="remove_button"
-        >
-          remove
-        </Button>
-      )}
+      </Box>
       <Comments comments={blog.comments} />
     </>
   )

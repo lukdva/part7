@@ -4,7 +4,7 @@ import React from 'react'
 import { setMessageWithTimeout } from '../reducers/NotificationReducer'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/BlogsReducer'
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, Box } from '@mui/material'
 
 const BlogForm = (props) => {
   const [title, setTitle] = useState('')
@@ -27,10 +27,13 @@ const BlogForm = (props) => {
       dispatch(setMessageWithTimeout(err.message, 'error', 3))
     }
   }
+  const margins = {
+    marginBottom: 8,
+  }
   return (
     <>
       <form onSubmit={handleNewBlogSubmit}>
-        <div>
+        <Box style={margins}>
           <TextField
             label="Title"
             name="Title"
@@ -41,8 +44,8 @@ const BlogForm = (props) => {
             }}
             data-testid="title_input"
           />
-        </div>
-        <div>
+        </Box>
+        <Box style={margins}>
           <TextField
             label="Author"
             name="Author"
@@ -53,8 +56,8 @@ const BlogForm = (props) => {
             }}
             data-testid="author_input"
           />
-        </div>
-        <div>
+        </Box>
+        <Box style={margins}>
           <TextField
             label="Url"
             name="Url"
@@ -65,8 +68,9 @@ const BlogForm = (props) => {
             }}
             data-testid="url_input"
           />
-        </div>
+        </Box>
         <Button
+          style={margins}
           variant="contained"
           size="small"
           type="submit"

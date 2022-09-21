@@ -10,7 +10,9 @@ const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
-
+  const styles = {
+    marginTop: 8,
+  }
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -30,6 +32,7 @@ const Login = () => {
       <form onSubmit={handleLogin} data-testid="login_form">
         <div>
           <TextField
+            style={styles}
             label="Username"
             name="Username"
             size="small"
@@ -42,6 +45,7 @@ const Login = () => {
         </div>
         <div>
           <TextField
+            style={styles}
             label="Password"
             type="password"
             name="Password"
@@ -54,6 +58,7 @@ const Login = () => {
           />
         </div>
         <Button
+          style={styles}
           size="small"
           variant="contained"
           type="submit"

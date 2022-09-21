@@ -15,12 +15,23 @@ const CommentForm = () => {
     dispatch(createComment(blogId, comment.validFields.value))
     comment.reset()
   }
-
+  const buttonStyles = {
+    marginLeft: 8,
+  }
+  const formStyles = {
+    display: 'flex',
+    alignItems: 'center',
+  }
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={formStyles}>
         <TextField size="small" label="comment" {...comment.validFields} />
-        <Button variant="contained" size="small" type="submit">
+        <Button
+          style={buttonStyles}
+          variant="contained"
+          size="small"
+          type="submit"
+        >
           add comment
         </Button>
       </form>
