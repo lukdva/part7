@@ -1,3 +1,4 @@
+import { List, Typography, ListItem } from '@mui/material'
 import React from 'react'
 import CommentForm from './CommentForm'
 
@@ -5,16 +6,18 @@ const Comments = ({ comments }) => {
   console.log(comments)
   return (
     <div>
-      <h3>comments</h3>
+      <Typography variant={'h4'}>comments</Typography>
       <CommentForm />
       {comments && comments.length > 0 ? (
-        <ul>
+        <List>
           {comments.map((comment) => (
-            <li key={comment.id}>{comment.content}</li>
+            <ListItem key={comment.id}>
+              <Typography variant={'body1'}>{comment.content}</Typography>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       ) : (
-        <div>No comments available</div>
+        <Typography variant={'body1'}>No comments available</Typography>
       )}
     </div>
   )

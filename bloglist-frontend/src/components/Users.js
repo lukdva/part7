@@ -8,13 +8,16 @@ import {
   TableCell,
   TableContainer,
   Paper,
+  Typography,
+  //   Button,
+  //   ListItemButton,
 } from '@mui/material'
 
 const Users = ({ users }) => {
   if (!users) return null
   return (
     <>
-      <h2>Users</h2>
+      <Typography variant={'h2'}>Users</Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -26,8 +29,12 @@ const Users = ({ users }) => {
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
-                <TableCell>
-                  <Link to={`/users/${user.id}`}>{user.name}</Link>
+                <TableCell
+                  component={Link}
+                  to={`/users/${user.id}`}
+                  sx={{ textDecoration: 'none' }}
+                >
+                  {user.name}
                 </TableCell>
                 <TableCell>{user.blogs.length}</TableCell>
               </TableRow>

@@ -4,6 +4,7 @@ import { useField } from '../hooks/index'
 import { createComment } from '../reducers/BlogsReducer'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { Button, TextField } from '@mui/material'
 
 const CommentForm = () => {
   const comment = useField()
@@ -18,8 +19,10 @@ const CommentForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input {...comment.validFields} />
-        <button type="submit">add comment</button>
+        <TextField size="small" label="comment" {...comment.validFields} />
+        <Button variant="contained" size="small" type="submit">
+          add comment
+        </Button>
       </form>
     </div>
   )

@@ -15,7 +15,8 @@ import { Routes, Route, useMatch } from 'react-router-dom'
 import { initializeUsers } from './reducers/UsersReducer'
 import { initializeBlogs } from './reducers/BlogsReducer'
 import Navigation from './components/Navigation'
-import { Container } from '@mui/material'
+import { Container, Typography } from '@mui/material'
+// import '@fontsource/roboto/400.css'
 
 const App = () => {
   const signedUser = useSelector((state) => state.loggedInUser)
@@ -55,15 +56,16 @@ const App = () => {
       {signedUser !== null && (
         <Container>
           <Navigation />
-          <Title name="blogs" />
+
           <Notification />
           <Routes>
             <Route
               path="/"
               element={
                 <>
-                  <Title name="create new" />
-                  <Togglable buttonText="new note" ref={blogFormRef}>
+                  <Title name="blogs" />
+                  <Typography variant={'h4'}> Create new note</Typography>
+                  <Togglable buttonText="new blog" ref={blogFormRef}>
                     <BlogForm blogFormRef={blogFormRef} />
                   </Togglable>
                   <BlogList user={signedUser} blogs={blogs} />

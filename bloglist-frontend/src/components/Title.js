@@ -1,7 +1,8 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 
 const Title = (props) => {
-  return <h2>{props.name}</h2>
+  return <Typography variant={'h2'}>{props.name}</Typography>
 }
 
 export default Title

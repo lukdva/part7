@@ -4,6 +4,7 @@ import React from 'react'
 import { setMessageWithTimeout } from '../reducers/NotificationReducer'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/BlogsReducer'
+import { TextField, Button } from '@mui/material'
 
 const BlogForm = (props) => {
   const [title, setTitle] = useState('')
@@ -27,47 +28,54 @@ const BlogForm = (props) => {
     }
   }
   return (
-    <form onSubmit={handleNewBlogSubmit}>
-      <div>
-        title:
-        <input
-          type="text"
-          name="Title"
-          value={title}
-          onChange={({ target }) => {
-            setTitle(target.value)
-          }}
-          data-testid="title_input"
-        />
-      </div>
-      <div>
-        author:
-        <input
-          type="text"
-          name="Author"
-          value={author}
-          onChange={({ target }) => {
-            setAuthor(target.value)
-          }}
-          data-testid="author_input"
-        />
-      </div>
-      <div>
-        url:
-        <input
-          type="text"
-          name="Url"
-          value={url}
-          onChange={({ target }) => {
-            setUrl(target.value)
-          }}
-          data-testid="url_input"
-        />
-      </div>
-      <button type="submit" data-testid="create_button">
-        create
-      </button>
-    </form>
+    <>
+      <form onSubmit={handleNewBlogSubmit}>
+        <div>
+          <TextField
+            label="Title"
+            name="Title"
+            size="small"
+            value={title}
+            onChange={({ target }) => {
+              setTitle(target.value)
+            }}
+            data-testid="title_input"
+          />
+        </div>
+        <div>
+          <TextField
+            label="Author"
+            name="Author"
+            size="small"
+            value={author}
+            onChange={({ target }) => {
+              setAuthor(target.value)
+            }}
+            data-testid="author_input"
+          />
+        </div>
+        <div>
+          <TextField
+            label="Url"
+            name="Url"
+            size="small"
+            value={url}
+            onChange={({ target }) => {
+              setUrl(target.value)
+            }}
+            data-testid="url_input"
+          />
+        </div>
+        <Button
+          variant="contained"
+          size="small"
+          type="submit"
+          data-testid="create_button"
+        >
+          create
+        </Button>
+      </form>
+    </>
   )
 }
 

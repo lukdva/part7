@@ -4,6 +4,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { setMessageWithTimeout } from '../reducers/NotificationReducer'
 import { setUser } from '../reducers/LoggedInUserReducer'
+import { Button, TextField } from '@mui/material'
 
 const Login = () => {
   const [username, setUsername] = useState('')
@@ -28,32 +29,38 @@ const Login = () => {
     <>
       <form onSubmit={handleLogin} data-testid="login_form">
         <div>
-          username
-          <input
-            type="text"
+          <TextField
+            label="Username"
             name="Username"
+            size="small"
             value={username}
             onChange={({ target }) => {
               setUsername(target.value)
             }}
             data-testid="username"
-          ></input>
+          />
         </div>
         <div>
-          password
-          <input
+          <TextField
+            label="Password"
             type="password"
             name="Password"
+            size="small"
             value={password}
             onChange={({ target }) => {
               setPassword(target.value)
             }}
             data-testid="password"
-          ></input>
+          />
         </div>
-        <button type="submit" data-testid="login_button">
+        <Button
+          size="small"
+          variant="contained"
+          type="submit"
+          data-testid="login_button"
+        >
           login
-        </button>
+        </Button>
       </form>
     </>
   )

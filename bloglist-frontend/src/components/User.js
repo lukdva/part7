@@ -1,3 +1,4 @@
+import { List, ListItem, ListItemText, Typography } from '@mui/material'
 import React from 'react'
 
 const User = ({ user }) => {
@@ -6,13 +7,15 @@ const User = ({ user }) => {
   }
   return (
     <>
-      <h2>{user.name}</h2>
-      <h3>added blogs</h3>
-      <ul>
+      <Typography variant={'h2'}>{user.name}</Typography>
+      <Typography variant={'h4'}>added blogs</Typography>
+      <List>
         {user.blogs.map((blog) => (
-          <li key={blog.id}>{blog.title}</li>
+          <ListItem divider key={blog.id}>
+            <ListItemText>{blog.title}</ListItemText>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </>
   )
 }
