@@ -55,7 +55,7 @@ const App = () => {
               signedUser || loggedInUser ? (
                 <>
                   <Title name="Blogs" />
-                  <Typography variant={'h4'}> Create new note</Typography>
+                  <Typography variant={'h4'}> Create new blog</Typography>
                   <Togglable buttonText="new blog" ref={blogFormRef}>
                     <BlogForm blogFormRef={blogFormRef} />
                   </Togglable>
